@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "category_path": "Roblox Studio > Услуги",
+  "title_ru": "💻 ROBLOX STUDIO | LUA / LUAU СКРИПТ",
+  "title_en": "💻 ROBLOX STUDIO | LUA / LUAU SCRIPT",
+  "description_ru": "Описание услуги",
+  "description_en": "Service description",
+  "payment_msg_ru": "Спасибо за покупку! Пришлите ТЗ.",
+  "payment_msg_en": "Thank you! Please send your requirements.",
+  "price": 199,
+  "active": true,
+  "image_files": ["cover.png"]
+}

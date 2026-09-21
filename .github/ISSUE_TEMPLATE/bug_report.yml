@@ -1,0 +1,29 @@
+name: Bug report
+description: Report reproducible ArtBay Publisher behavior
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Never paste Telegram tokens, golden_key cookies, or private logs without redaction."
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: "4.0.2"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the exact steps and the result you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: "Windows version, package type, approximate lot count"
+    validations:
+      required: true

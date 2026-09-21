@@ -1,0 +1,29 @@
+# Local builds and release artifacts
+*.exe
+*.exe.sha256
+*.zip
+/dist/
+
+# Local ArtBay packages and user data
+/товары/
+/products/
+bulk-job.json
+bulk-progress.json
+config.json
+app.log
+backups/
+lot-*/
+incoming-*/
+upload-*
+
+# Go build/test output
+*.test
+*.out
+coverage.*
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini

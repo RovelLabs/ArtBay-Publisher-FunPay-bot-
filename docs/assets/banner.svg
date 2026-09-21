@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+  <title id="title">ArtBay Publisher</title>
+  <desc id="desc">Local-first Telegram to FunPay publishing automation</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070a12"/>
+      <stop offset="0.55" stop-color="#10172a"/>
+      <stop offset="1" stop-color="#071b22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7c82ff"/>
+      <stop offset="1" stop-color="#55d9ff"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="420" rx="32" fill="url(#bg)"/>
+  <circle cx="170" cy="74" r="150" fill="#6d82ff" opacity=".18" filter="url(#glow)"/>
+  <circle cx="1100" cy="350" r="190" fill="#39d4d8" opacity=".13" filter="url(#glow)"/>
+  <g opacity=".24" fill="none" stroke="#9de8ff">
+    <path d="M70 330C250 210 350 380 520 250S820 95 1010 220s170 20 220-50"/>
+    <path d="M30 370C220 250 340 420 540 290S830 135 1040 260s150 10 210-60" opacity=".45"/>
+  </g>
+  <g transform="translate(92 102)">
+    <rect width="152" height="152" rx="42" fill="#111a30" stroke="#657cff" stroke-width="3"/>
+    <path d="M44 108V43h43c26 0 39 12 39 31 0 14-8 24-22 28l27 36h-31l-22-32h-8v32H44zm26-54v31h14c11 0 17-5 17-16 0-10-6-15-17-15H70z" fill="url(#accent)"/>
+    <circle cx="121" cy="34" r="8" fill="#65e6a7"/>
+  </g>
+  <text x="286" y="166" fill="#f7f9ff" font-family="Segoe UI, Arial, sans-serif" font-size="68" font-weight="800" letter-spacing="-2">ArtBay Publisher</text>
+  <text x="290" y="220" fill="#94a4bf" font-family="Segoe UI, Arial, sans-serif" font-size="25">Telegram → validation → queue → FunPay</text>
+  <g transform="translate(290 263)" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">
+    <rect width="144" height="44" rx="22" fill="#1b2541" stroke="#34456d"/>
+    <text x="72" y="29" text-anchor="middle" fill="#bfcaff">LOCAL-FIRST</text>
+    <rect x="158" width="132" height="44" rx="22" fill="#102f2c" stroke="#246557"/>
+    <text x="224" y="29" text-anchor="middle" fill="#79e6bd">RESUMABLE</text>
+    <rect x="304" width="122" height="44" rx="22" fill="#29213f" stroke="#57487e"/>
+    <text x="365" y="29" text-anchor="middle" fill="#d1bdff">SECURE</text>
+  </g>
+  <text x="1188" y="62" text-anchor="end" fill="#7888a5" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">ROVELLABS · V4.0.2</text>
+</svg>
