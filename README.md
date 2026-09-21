@@ -11,7 +11,7 @@
   </p>
 
   <p align="center">
-    <a href="https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest"><img src="https://img.shields.io/badge/Release-v4.0.2-6366f1?style=for-the-badge&logo=github&logoColor=white" alt="Release v4.0.2"></a>
+    <a href="https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest"><img src="https://img.shields.io/badge/Release-v4.0.3-6366f1?style=for-the-badge&logo=github&logoColor=white" alt="Release v4.0.3"></a>
     <a href="https://go.dev/"><img src="https://img.shields.io/badge/Go-1.23+-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go 1.23+"></a>
     <img src="https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white" alt="Windows 10/11">
     <img src="https://img.shields.io/badge/Telegram-Bot%20API-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Bot">
@@ -83,9 +83,9 @@ flowchart TD
     H -->|Успешный листинг| I[✅ Опубликованные товары]:::target
 
     subgraph Команды управления
-        J[/stop - Пауза]
-        K[/resume - Продолжить]
-        L[/cancel - Отменить]
+        J["/stop — Пауза"]
+        K["/resume — Продолжить"]
+        L["/cancel — Отменить"]
     end
     J -.-> E
     K -.-> E
@@ -97,15 +97,27 @@ flowchart TD
 ## 🚀 Быстрый старт
 
 ### 1. Загрузка релиза
-Перейдите на страницу **[Releases](https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest)** и скачайте архив:
-```
-ArtBayPublisher-v4.0.2-windows-x64.zip
-```
+Перейдите на страницу **[Releases](https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest)** и выберите один из двух вариантов:
 
-### 2. Распаковка и запуск
+| Вариант | Файл | Когда использовать |
+| :--- | :--- | :--- |
+| 🛠 **Установщик (рекомендуется)** | `ArtBayPublisher-Setup-4.0.3.exe` | Сам создаёт папку установки, ярлыки в меню «Пуск» и на рабочем столе, регистрирует программу в «Установка и удаление программ». Права администратора не нужны. |
+| 📦 **Портативная версия** | `ArtBayPublisher-v4.0.3-windows-x64.zip` | Без установки — просто распакуйте архив и запускайте `.exe` откуда угодно (например, с флешки). |
+
+### 2. Установка и запуск
+
+**Через установщик:**
+1. Запустите `ArtBayPublisher-Setup-4.0.3.exe` и пройдите мастер установки (доступен русский язык).
+2. По завершении программа запустится автоматически — ярлык также появится в меню «Пуск».
+
+**Портативная версия:**
 1. Распакуйте архив в удобную папку (например, `C:\ArtBayPublisher`).
 2. Запустите файл **`UPDATE_AND_START.bat`** или **`ArtBayPublisher.exe`**.
-3. В браузере автоматически откроется локальная панель: **`http://127.0.0.1:8765`**.
+
+В обоих случаях в браузере автоматически откроется локальная панель: **`http://127.0.0.1:8765`**.
+
+> [!NOTE]
+> Все зависимости уже встроены в `.exe` — Go-рантайм и HTTP-сервер собраны внутрь одного файла. Устанавливать Python, Node.js, WebView2 или другие компоненты не требуется.
 
 ### 3. Первичная настройка
 1. **Telegram Bot Token**: Создайте бота через [@BotFather](https://t.me/BotFather), скопируйте токен и вставьте в панель.
@@ -208,8 +220,15 @@ cd ArtBay-Publisher-FunPay-bot-
 go test -v ./...
 go vet ./...
 
-# 3. Сборка исполняемого файла для Windows (без отображения консоли)
+# 3. (опционально) Встраивание иконки и версии в .exe
+go install github.com/tc-hib/go-winres@latest
+go-winres make
+
+# 4. Сборка исполняемого файла для Windows (без отображения консоли)
 go build -trimpath -ldflags="-s -w -H=windowsgui" -o ArtBayPublisher.exe .
+
+# 5. (опционально) Сборка установщика — требуется Inno Setup 6
+iscc installer\ArtBayPublisher.iss
 ```
 
 ---

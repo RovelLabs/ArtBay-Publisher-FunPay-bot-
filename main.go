@@ -33,7 +33,7 @@ import (
 
 const (
 	appName                   = "ArtBay Publisher"
-	appVersion                = "4.0.2"
+	appVersion                = "4.0.3"
 	listenAddr                = "127.0.0.1:8765"
 	autoPublishBatchThreshold = 10
 )

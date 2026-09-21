@@ -2,6 +2,12 @@
 
 All notable ArtBay Publisher changes are documented here.
 
+## [4.0.3] - 2026-09-21
+
+- Added a Windows installer (`ArtBayPublisher-Setup-4.0.3.exe`, Inno Setup) that creates Start Menu / Desktop shortcuts and registers an uninstaller.
+- Added a branded application icon, embedded into the `.exe` via `go-winres`.
+- Fixed a Mermaid diagram rendering error in the README architecture diagram.
+
 ## [4.0.2] - 2026-09-21
 
 - Added `/cancel` to permanently cancel and delete a saved bulk queue.

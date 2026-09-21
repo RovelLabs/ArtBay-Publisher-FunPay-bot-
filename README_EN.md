@@ -7,7 +7,7 @@
   </p>
 
   <p>
-    <img alt="Version" src="https://img.shields.io/badge/version-4.0.2-6d82ff?style=for-the-badge">
+    <img alt="Version" src="https://img.shields.io/badge/version-4.0.3-6d82ff?style=for-the-badge">
     <img alt="Go" src="https://img.shields.io/badge/Go-1.23+-00ADD8?style=for-the-badge&logo=go&logoColor=white">
     <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white">
     <img alt="Telegram" src="https://img.shields.io/badge/Telegram-Bot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white">
@@ -49,12 +49,20 @@ flowchart LR
 
 ## 🚀 Quick start
 
-1. Open the [latest release](https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest).
-2. Download and extract `ArtBayPublisher-v4.0.2-windows-x64.zip`.
-3. Run `UPDATE_AND_START.bat` or `ArtBayPublisher.exe`.
-4. Enter your Telegram Bot Token in the local dashboard and pair the owner account.
-5. Add the `golden_key` cookie from your own FunPay account.
-6. Send a ZIP/JSON package to the bot and confirm publishing.
+Open the [latest release](https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest) and pick one:
+
+| Option | File | Use it when |
+| :--- | :--- | :--- |
+| 🛠 **Installer (recommended)** | `ArtBayPublisher-Setup-4.0.3.exe` | Creates the install folder, Start Menu / Desktop shortcuts, and registers an uninstaller — no admin rights required. |
+| 📦 **Portable build** | `ArtBayPublisher-v4.0.3-windows-x64.zip` | No installation — just unzip and run the `.exe` from anywhere (e.g. a USB drive). |
+
+1. Run the installer (or unzip the portable build) and start `ArtBayPublisher.exe`.
+2. Enter your Telegram Bot Token in the local dashboard and pair the owner account.
+3. Add the `golden_key` cookie from your own FunPay account.
+4. Send a ZIP/JSON package to the bot and confirm publishing.
+
+> [!NOTE]
+> Everything the app needs is compiled into the single `.exe` — no Python, Node.js, WebView2, or other runtime to install separately.
 
 > [!TIP]
 > Do not delete `%APPDATA%\ArtBayPublisher` during upgrades. It contains settings, queue checkpoints, and local backups.
@@ -132,12 +140,20 @@ Go 1.23+ is required.
 
 ```powershell
 go test ./...
+
+# Embed the app icon and version info (optional, done automatically in CI)
+go install github.com/tc-hib/go-winres@latest
+go-winres make
+
 go build -trimpath -ldflags="-s -w -H=windowsgui" -o ArtBayPublisher.exe .
+
+# Build the installer (optional, requires Inno Setup 6)
+iscc installer\ArtBayPublisher.iss
 ```
 
 ## 🗺 Project status
 
-- Current version: **4.0.2**
+- Current version: **4.0.3**
 - Primary platform: **Windows 10/11 x64**
 - Interface: **local web dashboard + Telegram**
 - Changes: [`CHANGELOG.md`](CHANGELOG.md)

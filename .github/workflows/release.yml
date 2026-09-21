@@ -27,9 +27,27 @@ jobs:
           go test -v ./...
           go vet ./...
 
+      - name: Install go-winres
+        run: go install github.com/tc-hib/go-winres@latest
+
+      - name: Embed icon & version info
+        run: go-winres make
+        working-directory: .
+
       - name: Build Windows Binary
         run: |
           go build -trimpath -ldflags="-s -w -H=windowsgui" -o ArtBayPublisher.exe .
+
+      - name: Build Installer (Inno Setup)
+        shell: pwsh
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) {
+            choco install innosetup --no-progress -y
+            $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          }
+          New-Item -ItemType Directory -Path "dist" -Force | Out-Null
+          & $iscc "installer\ArtBayPublisher.iss"
 
       - name: Prepare Release Package
         shell: pwsh
@@ -37,25 +55,31 @@ jobs:
           $tag = "${{ github.ref_name }}"
           $distName = "ArtBayPublisher-$tag-windows-x64"
           New-Item -ItemType Directory -Path "dist" -Force | Out-Null
-          
-          # Create zip archive
+
+          # Create portable zip archive
           Compress-Archive -Path "ArtBayPublisher.exe", "UPDATE_AND_START.bat", "README.md", "LICENSE", "examples" -DestinationPath "dist/$distName.zip" -Force
-          
+
           # Compute hashes
           $exeHash = (Get-FileHash -Algorithm SHA256 "ArtBayPublisher.exe").Hash.ToLower()
           $zipHash = (Get-FileHash -Algorithm SHA256 "dist/$distName.zip").Hash.ToLower()
-          
+
           "$exeHash  ArtBayPublisher.exe" | Out-File -Encoding utf8 "dist/ArtBayPublisher.exe.sha256"
           "$zipHash  $distName.zip" | Out-File -Encoding utf8 "dist/$distName.zip.sha256"
-          
+
           Copy-Item "ArtBayPublisher.exe" "dist/ArtBayPublisher.exe"
+
+          $setupExe = Get-ChildItem "dist" -Filter "ArtBayPublisher-Setup-*.exe" | Select-Object -First 1
+          if ($setupExe) {
+            $setupHash = (Get-FileHash -Algorithm SHA256 $setupExe.FullName).Hash.ToLower()
+            "$setupHash  $($setupExe.Name)" | Out-File -Encoding utf8 "dist/$($setupExe.Name).sha256"
+          }
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           name: "ArtBay Publisher ${{ github.ref_name }}"
-          body_path: RELEASE_NOTES_V4.0.2.md
+          body_path: RELEASE_NOTES_V4.0.3.md
           draft: false
           prerelease: false
           files: |
