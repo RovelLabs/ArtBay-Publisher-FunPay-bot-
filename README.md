@@ -11,7 +11,7 @@
   </p>
 
   <p align="center">
-    <a href="https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest"><img src="https://img.shields.io/badge/Release-v4.0.3-6366f1?style=for-the-badge&logo=github&logoColor=white" alt="Release v4.0.3"></a>
+    <a href="https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest"><img src="https://img.shields.io/badge/Release-v4.0.4-6366f1?style=for-the-badge&logo=github&logoColor=white" alt="Release v4.0.4"></a>
     <a href="https://go.dev/"><img src="https://img.shields.io/badge/Go-1.23+-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go 1.23+"></a>
     <img src="https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white" alt="Windows 10/11">
     <img src="https://img.shields.io/badge/Telegram-Bot%20API-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Bot">
@@ -101,13 +101,13 @@ flowchart TD
 
 | Вариант | Файл | Когда использовать |
 | :--- | :--- | :--- |
-| 🛠 **Установщик (рекомендуется)** | `ArtBayPublisher-Setup-4.0.3.exe` | Сам создаёт папку установки, ярлыки в меню «Пуск» и на рабочем столе, регистрирует программу в «Установка и удаление программ». Права администратора не нужны. |
-| 📦 **Портативная версия** | `ArtBayPublisher-v4.0.3-windows-x64.zip` | Без установки — просто распакуйте архив и запускайте `.exe` откуда угодно (например, с флешки). |
+| 🛠 **Установщик (рекомендуется)** | `ArtBayPublisher-Setup-4.0.4.exe` | Сам создаёт папку установки, ярлыки в меню «Пуск» и на рабочем столе, регистрирует программу в «Установка и удаление программ». Права администратора не нужны. |
+| 📦 **Портативная версия** | `ArtBayPublisher-v4.0.4-windows-x64.zip` | Без установки — просто распакуйте архив и запускайте `.exe` откуда угодно (например, с флешки). |
 
 ### 2. Установка и запуск
 
 **Через установщик:**
-1. Запустите `ArtBayPublisher-Setup-4.0.3.exe` и пройдите мастер установки (доступен русский язык).
+1. Запустите `ArtBayPublisher-Setup-4.0.4.exe` и пройдите мастер установки (доступен русский язык).
 2. По завершении программа запустится автоматически — ярлык также появится в меню «Пуск».
 
 **Портативная версия:**

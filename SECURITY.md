@@ -15,7 +15,7 @@ RovelLabs на GitHub и приложите воспроизводимые ша�
 ## Supported version / Поддерживаемая версия
 
 Security fixes are provided for the latest published release. At the moment,
-that version is **4.0.3**.
+that version is **4.0.4**.
 
 Исправления безопасности выпускаются для последней опубликованной версии.
-Сейчас это **4.0.3**.
+Сейчас это **4.0.4**.

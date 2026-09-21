@@ -2,11 +2,12 @@
 
 All notable ArtBay Publisher changes are documented here.
 
-## [4.0.3] - 2026-09-21
+## [4.0.4] - 2026-09-21
 
-- Added a Windows installer (`ArtBayPublisher-Setup-4.0.3.exe`, Inno Setup) that creates Start Menu / Desktop shortcuts and registers an uninstaller.
+- Added a Windows installer (`ArtBayPublisher-Setup-4.0.4.exe`, Inno Setup) that creates Start Menu / Desktop shortcuts and registers an uninstaller.
 - Added a branded application icon, embedded into the `.exe` via `go-winres`.
 - Fixed a Mermaid diagram rendering error in the README architecture diagram.
+- Fixed the `go-winres` resource config (missing language-ID level) that broke the release build.
 
 ## [4.0.2] - 2026-09-21
 

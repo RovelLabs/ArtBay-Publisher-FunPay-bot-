@@ -35,10 +35,10 @@ if not errorlevel 1 (
     reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v ArtBayPublisher /t REG_SZ /d "\"%~dp0ArtBayPublisher.exe\" --background" /f >nul
 )
 
-echo [4/4] Запускаю ArtBay Publisher 4.0.3...
+echo [4/4] Запускаю ArtBay Publisher 4.0.4...
 start "" "%~dp0ArtBayPublisher.exe"
 
 echo.
 echo Готово. Подключи Telegram и FunPay в открывшейся панели.
-echo В Telegram команда /version должна показать v4.0.3.
+echo В Telegram команда /version должна показать v4.0.4.
 timeout /t 5 >nul

@@ -3,7 +3,7 @@
 ; Build in CI:      see .github/workflows/release.yml (windows-latest ships Inno Setup 6 preinstalled)
 
 #define MyAppName "ArtBay Publisher"
-#define MyAppVersion "4.0.3"
+#define MyAppVersion "4.0.4"
 #define MyAppPublisher "RovelLabs"
 #define MyAppURL "https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-"
 #define MyAppExeName "ArtBayPublisher.exe"

@@ -7,7 +7,7 @@
   </p>
 
   <p>
-    <img alt="Version" src="https://img.shields.io/badge/version-4.0.3-6d82ff?style=for-the-badge">
+    <img alt="Version" src="https://img.shields.io/badge/version-4.0.4-6d82ff?style=for-the-badge">
     <img alt="Go" src="https://img.shields.io/badge/Go-1.23+-00ADD8?style=for-the-badge&logo=go&logoColor=white">
     <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white">
     <img alt="Telegram" src="https://img.shields.io/badge/Telegram-Bot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white">
@@ -53,8 +53,8 @@ Open the [latest release](https://github.com/RovelLabs/ArtBay-Publisher-FunPay-b
 
 | Option | File | Use it when |
 | :--- | :--- | :--- |
-| 🛠 **Installer (recommended)** | `ArtBayPublisher-Setup-4.0.3.exe` | Creates the install folder, Start Menu / Desktop shortcuts, and registers an uninstaller — no admin rights required. |
-| 📦 **Portable build** | `ArtBayPublisher-v4.0.3-windows-x64.zip` | No installation — just unzip and run the `.exe` from anywhere (e.g. a USB drive). |
+| 🛠 **Installer (recommended)** | `ArtBayPublisher-Setup-4.0.4.exe` | Creates the install folder, Start Menu / Desktop shortcuts, and registers an uninstaller — no admin rights required. |
+| 📦 **Portable build** | `ArtBayPublisher-v4.0.4-windows-x64.zip` | No installation — just unzip and run the `.exe` from anywhere (e.g. a USB drive). |
 
 1. Run the installer (or unzip the portable build) and start `ArtBayPublisher.exe`.
 2. Enter your Telegram Bot Token in the local dashboard and pair the owner account.
@@ -153,7 +153,7 @@ iscc installer\ArtBayPublisher.iss
 
 ## 🗺 Project status
 
-- Current version: **4.0.3**
+- Current version: **4.0.4**
 - Primary platform: **Windows 10/11 x64**
 - Interface: **local web dashboard + Telegram**
 - Changes: [`CHANGELOG.md`](CHANGELOG.md)

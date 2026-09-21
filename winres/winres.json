@@ -31,19 +31,19 @@
     "#1": {
       "0000": {
         "fixed": {
-          "file_version": "4.0.3.0",
-          "product_version": "4.0.3.0"
+          "file_version": "4.0.4.0",
+          "product_version": "4.0.4.0"
         },
         "info": {
           "0409": {
             "CompanyName": "RovelLabs",
             "FileDescription": "ArtBay Publisher — Telegram to FunPay bulk publishing bridge",
-            "FileVersion": "4.0.3.0",
+            "FileVersion": "4.0.4.0",
             "InternalName": "ArtBayPublisher.exe",
             "LegalCopyright": "Copyright (c) 2026 RovelLabs",
             "OriginalFilename": "ArtBayPublisher.exe",
             "ProductName": "ArtBay Publisher",
-            "ProductVersion": "4.0.3.0"
+            "ProductVersion": "4.0.4.0"
           }
         }
       }
