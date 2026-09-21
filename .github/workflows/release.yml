@@ -1,0 +1,67 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build & Publish Release
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.x'
+          cache: true
+
+      - name: Run Tests
+        run: |
+          go test -v ./...
+          go vet ./...
+
+      - name: Build Windows Binary
+        run: |
+          go build -trimpath -ldflags="-s -w -H=windowsgui" -o ArtBayPublisher.exe .
+
+      - name: Prepare Release Package
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $distName = "ArtBayPublisher-$tag-windows-x64"
+          New-Item -ItemType Directory -Path "dist" -Force | Out-Null
+          
+          # Create zip archive
+          Compress-Archive -Path "ArtBayPublisher.exe", "UPDATE_AND_START.bat", "README.md", "LICENSE", "examples" -DestinationPath "dist/$distName.zip" -Force
+          
+          # Compute hashes
+          $exeHash = (Get-FileHash -Algorithm SHA256 "ArtBayPublisher.exe").Hash.ToLower()
+          $zipHash = (Get-FileHash -Algorithm SHA256 "dist/$distName.zip").Hash.ToLower()
+          
+          "$exeHash  ArtBayPublisher.exe" | Out-File -Encoding utf8 "dist/ArtBayPublisher.exe.sha256"
+          "$zipHash  $distName.zip" | Out-File -Encoding utf8 "dist/$distName.zip.sha256"
+          
+          Copy-Item "ArtBayPublisher.exe" "dist/ArtBayPublisher.exe"
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: "ArtBay Publisher ${{ github.ref_name }}"
+          body_path: RELEASE_NOTES_V4.0.2.md
+          draft: false
+          prerelease: false
+          files: |
+            dist/*.zip
+            dist/*.zip.sha256
+            dist/*.exe
+            dist/*.exe.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
