@@ -253,6 +253,12 @@ iscc installer\ArtBayPublisher.iss
 
 ---
 
+## 🏷️ Теги и ключевые слова / Keywords
+
+`funpay` • `funpay-bot` • `telegram-bot` • `funpay-publisher` • `automation` • `golang` • `go` • `marketplace` • `bulk-uploader` • `ecommerce` • `windows` • `local-first` • `lot-manager` • `funpay-auto-response` • `auto-publishing`
+
+---
+
 ## 📄 Лицензия
 
 Copyright © 2026 **RovelLabs**. Все права защищены.  

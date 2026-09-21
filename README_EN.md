@@ -1,174 +1,245 @@
 <div align="center">
-  <img src="docs/assets/banner.svg" alt="ArtBay Publisher — Telegram to FunPay publishing automation" width="100%">
+  <a href="https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-">
+    <img src="docs/assets/banner.svg" alt="ArtBay Publisher Banner" width="100%">
+  </a>
 
-  <p>
-    <a href="README.md">Русский</a> ·
-    <a href="README_EN.md"><b>English</b></a>
+  <br><br>
+
+  <p align="center">
+    <a href="README.md"><b>🇷🇺 Русский</b></a>&nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="README_EN.md"><b>🇬🇧 English</b></a>
   </p>
 
-  <p>
-    <img alt="Version" src="https://img.shields.io/badge/version-4.0.4-6d82ff?style=for-the-badge">
-    <img alt="Go" src="https://img.shields.io/badge/Go-1.23+-00ADD8?style=for-the-badge&logo=go&logoColor=white">
-    <img alt="Windows" src="https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white">
-    <img alt="Telegram" src="https://img.shields.io/badge/Telegram-Bot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white">
-    <img alt="FunPay" src="https://img.shields.io/badge/FunPay-Publisher-ff5a5f?style=for-the-badge">
+  <p align="center">
+    <a href="https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest"><img src="https://img.shields.io/badge/Release-v4.0.4-6366f1?style=for-the-badge&logo=github&logoColor=white" alt="Release v4.0.4"></a>
+    <a href="https://go.dev/"><img src="https://img.shields.io/badge/Go-1.23+-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go 1.23+"></a>
+    <img src="https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white" alt="Windows 10/11">
+    <img src="https://img.shields.io/badge/Telegram-Bot%20API-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram Bot">
+    <img src="https://img.shields.io/badge/FunPay-Automation-ff5370?style=for-the-badge" alt="FunPay">
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-RovelLabs-10b981?style=for-the-badge" alt="License"></a>
   </p>
 
-  <h3>A local-first Telegram ↔ FunPay bridge for reliable bulk offer publishing</h3>
+  <p align="center">
+    <b>High-speed, resilient local-first bridge between Telegram and FunPay for intelligent bulk lot publishing and automated store management.</b>
+  </p>
 </div>
 
+---
+
 > [!IMPORTANT]
-> ArtBay Publisher is an independent RovelLabs project. It is not an official FunPay or Telegram product. Use automation responsibly and follow the platforms' rules.
+> **ArtBay Publisher** is an independent software tool created by **RovelLabs**. It is neither affiliated with nor an official product of FunPay or Telegram. Use automation responsibly and in accordance with platform policies.
 
-## ✨ Highlights
+---
 
-| Feature | What it does |
-|---|---|
-| 🔐 Secure connection | Validates the Telegram Bot Token and FunPay `golden_key` before saving; stored secrets are never rendered back |
-| 📦 Flexible imports | Accepts single-lot ZIPs, large nested ZIP archives, `lots.json`, `artbay-batch.json`, and image-free JSON updates |
-| 🚀 Bulk publishing | Durable progress, pause/resume, cancellation, and recovery after an app restart |
-| 🧠 Smart failures | Separates duplicates and full categories from genuine per-offer errors |
-| ⏯ Queue controls | `/stop` pauses, `/resume` continues, and `/cancel` permanently discards a saved queue |
-| 🛍 Offer management | Browse, price, enable/disable, clone, export, delete, and roll back offers |
-| 🖼 Image support | PNG, JPG, WEBP, and GIF with SHA-256-based image reuse |
-| 🏠 Local-first | The dashboard is bound to `127.0.0.1:8765`; user data stays on the local machine |
+## 📑 Table of Contents
 
-## 🧭 Architecture
+- [✨ Key Features](#-key-features)
+- [🧭 Architecture & Pipeline](#-architecture--pipeline)
+- [🚀 Quick Start](#-quick-start)
+- [🤖 Telegram Commands](#-telegram-commands)
+- [📦 Package Formats & Manifests](#-package-formats--manifests)
+- [🛡 Security & Local-First Design](#-security--local-first-design)
+- [🧑‍💻 Build from Source](#-build-from-source)
+- [👨‍🚀 Developers & Community](#-developers--community)
+- [📄 License](#-license)
+
+---
+
+## ✨ Key Features
+
+| Feature | Description & Benefits |
+| :--- | :--- |
+| 🚀 **High-Speed Bulk Publishing** | Publish hundreds of offers in minutes through an automated queue with preview validation and error mitigation. |
+| ⏯ **Durable Queue Controls** | Resumable workflows via `/stop` (pause), `/resume` (continue), and `/cancel` (permanent cancel & checkpoint purge). |
+| 🛡 **Anti-Duplicate & Limit Engine** | Smart duplicate detection and category capacity limit handling without halting the ongoing publishing queue. |
+| 🔐 **100% Local-First & Zero-Leak** | Web dashboard runs strictly on `127.0.0.1:8765`. Telegram tokens and `golden_key` are encrypted and never exposed. |
+| 🖼 **Smart Media Pipeline** | Native support for `PNG`, `JPG`, `WEBP`, `GIF` with SHA-256 image caching to prevent duplicate uploads. |
+| 📦 **Flexible Ingestion Formats** | Handles single ZIPs, nested bulk ZIPs, `lots.json`, `artbay-batch.json`, and direct folder structures. |
+| 🛍 **Full Lot Management** | Adjust prices (including percentage shifts `/prices -10%`), toggle active status, clone lots, export to ZIP, and rollback. |
+| ⚡ **Fault-Tolerant Checkpoints** | State is saved to disk after every single lot processed — resume effortlessly right where you left off after restarts. |
+
+---
+
+## 🧭 Architecture & Pipeline
 
 ```mermaid
-flowchart LR
-    A[ZIP / JSON] --> B[Telegram bot]
-    B --> C[ArtBay Publisher<br>localhost:8765]
-    C --> D{Package validation}
-    D -->|ready| E[Publishing queue]
-    D -->|invalid| F[Clear error message]
-    E --> G[FunPay]
-    E --> H[Disk checkpoint]
-    H -->|resume| E
+flowchart TD
+    classDef client fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#fff;
+    classDef core fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,color:#fff;
+    classDef target fill:#3f0f1b,stroke:#fb7185,stroke-width:2px,color:#fff;
+    classDef disk fill:#064e3b,stroke:#34d399,stroke-width:2px,color:#fff;
+
+    A[📦 ZIP / JSON Packages] -->|Upload to Bot| B[📱 Telegram Bot UI]:::client
+    B -->|Package Ingestion| C[⚡ ArtBay Core Engine<br>127.0.0.1:8765]:::core
+    
+    C -->|Queue Preparation| D{Preview & Integrity Check}:::core
+    D -->|Confirmed| E[🚀 Publishing Queue Worker]:::core
+    D -->|Invalid Package| F[⚠️ Telegram Error Alert]:::client
+
+    E -->|Persistent State| G[(💾 Disk Checkpoint<br>%APPDATA%/ArtBayPublisher)]:::disk
+    G -.->|Resume After Restart| E
+    
+    E -->|Anti-Dupe & Capacity Check| H[🌐 FunPay API Gateway]:::target
+    H -->|Live Publication| I[✅ Active Lots Listed]:::target
+
+    subgraph Queue Management
+        J[/stop - Pause]
+        K[/resume - Resume]
+        L[/cancel - Cancel]
+    end
+    J -.-> E
+    K -.-> E
+    L -.-> E
 ```
 
-## 🚀 Quick start
+---
 
-Open the [latest release](https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest) and pick one:
+## 🚀 Quick Start
 
-| Option | File | Use it when |
-| :--- | :--- | :--- |
-| 🛠 **Installer (recommended)** | `ArtBayPublisher-Setup-4.0.4.exe` | Creates the install folder, Start Menu / Desktop shortcuts, and registers an uninstaller — no admin rights required. |
-| 📦 **Portable build** | `ArtBayPublisher-v4.0.4-windows-x64.zip` | No installation — just unzip and run the `.exe` from anywhere (e.g. a USB drive). |
+### 1. Download Latest Release
+Navigate to **[Releases](https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/releases/latest)** and download:
+```
+ArtBayPublisher-v4.0.2-windows-x64.zip
+```
 
-1. Run the installer (or unzip the portable build) and start `ArtBayPublisher.exe`.
-2. Enter your Telegram Bot Token in the local dashboard and pair the owner account.
-3. Add the `golden_key` cookie from your own FunPay account.
-4. Send a ZIP/JSON package to the bot and confirm publishing.
+### 2. Extract and Launch
+1. Extract the ZIP archive to your preferred folder (e.g., `C:\ArtBayPublisher`).
+2. Run **`UPDATE_AND_START.bat`** or **`ArtBayPublisher.exe`**.
+3. The local management dashboard will automatically open in your browser: **`http://127.0.0.1:8765`**.
 
-> [!NOTE]
-> Everything the app needs is compiled into the single `.exe` — no Python, Node.js, WebView2, or other runtime to install separately.
+### 3. Setup Connection
+1. **Telegram Bot Token**: Create a bot via [@BotFather](https://t.me/BotFather), paste the token into the dashboard.
+2. **Owner Pairing**: Click the pair button or open the generated deep-link URL in your Telegram bot.
+3. **FunPay golden_key**: Copy your account cookie `golden_key` from FunPay and save it in the dashboard.
+
+### 4. Publish First Offer
+- Drag and drop your product ZIP file directly into your Telegram bot chat.
+- Review the interactive preview (title, price, description, images).
+- Click **"Publish"** — your offer will appear live on FunPay!
 
 > [!TIP]
-> Do not delete `%APPDATA%\ArtBayPublisher` during upgrades. It contains settings, queue checkpoints, and local backups.
+> All application data, queue progress, and configuration are safely stored in `%APPDATA%\ArtBayPublisher`. This ensures zero data loss during version updates.
 
-## 📦 Package format
+---
 
-### Single offer
+## 🤖 Telegram Commands
 
+Control all publishing tasks and inventory management right from Telegram:
+
+| Command | Example | Description |
+| :--- | :--- | :--- |
+| `/lots` | `/lots` | List all active and hidden offers |
+| `/orders` | `/orders` | Display recent orders and transaction status |
+| `/stats` | `/stats` | View sales metrics, store statistics, and balance |
+| `/categories` | `/categories Roblox` | Search FunPay category IDs and taxonomy |
+| `/price` | `/price 1234567 299` | Modify the price of a specific offer by ID |
+| `/prices` | `/prices -10%` or `+50` | Bulk change prices across all active lots (% or fixed) |
+| `/on` / `/off` | `/on 1234567` | Enable or disable offer visibility |
+| `/clone` | `/clone 1234567` | Duplicate an existing offer with its assets |
+| `/export` | `/export 1234567` | Export an offer package back into a portable ZIP archive |
+| `/delete` | `/delete 1234567` | Delete an offer (with automated pre-deletion backup) |
+| `/rollback` | `/rollback` | Undo recent offer edits or deletions |
+| `/stop` | `/stop` | Pause active bulk publishing queue |
+| `/resume` | `/resume` | Resume the paused bulk queue |
+| `/cancel` | `/cancel` | Permanently cancel the queue and delete checkpoint |
+| `/version` | `/version` | Show engine build version and service health |
+
+---
+
+## 📦 Package Formats & Manifests
+
+### 📁 1. Single Lot Archive (`lot.zip`)
 ```text
-my-lot.zip
-├── lot.json
-└── cover.png
+my-awesome-product.zip
+├── lot.json          # Manifest containing parameters & copy
+└── cover.png         # Product cover image (PNG, JPG, WEBP, GIF)
 ```
 
+Example `lot.json`:
 ```json
 {
   "version": 2,
   "category_path": "Roblox Studio > Services",
-  "title_ru": "💻 ROBLOX STUDIO | LUA / LUAU СКРИПТ",
-  "title_en": "💻 ROBLOX STUDIO | LUA / LUAU SCRIPT",
-  "description_ru": "Описание услуги",
-  "description_en": "Service description",
-  "payment_msg_ru": "Спасибо за покупку! Пришлите ТЗ.",
-  "payment_msg_en": "Thank you! Please send your requirements.",
-  "price": 199,
+  "title_ru": "💻 ROBLOX STUDIO | LUA / LUAU СКРИПТ ЛЮБОЙ СЛОЖНОСТИ",
+  "title_en": "💻 ROBLOX STUDIO | LUA / LUAU CUSTOM SCRIPT",
+  "description_ru": "Быстрая разработка скриптов и систем для ваших плейсов в Roblox Studio.",
+  "description_en": "High-quality Roblox Studio scripting and Luau systems for your games.",
+  "payment_msg_ru": "Спасибо за покупку! Пожалуйста, отправьте ТЗ в чат заказа.",
+  "payment_msg_en": "Thank you for your purchase! Please describe your task in the order chat.",
+  "price": 249,
   "active": true,
-  "image_files": ["cover.png"]
+  "image_files": [
+    "cover.png"
+  ]
 }
 ```
 
-### Bulk archive
-
+### 🗂 2. Bulk Multi-Lot Package (`bulk.zip`)
 ```text
-bulk.zip
-├── 0001_lot.zip
-├── 0002_lot.zip
-├── 0003_lot.zip
+bulk-upload.zip
+├── 001_lot.zip
+├── 002_lot.zip
+├── 003_lot.zip
 └── ...
 ```
 
-Folder-based packages, shared `lots.json` / `artbay-batch.json` manifests, and `LOT_ID.png` image replacement packs are supported as well. See [`examples`](examples) for ready-to-edit manifests.
+---
 
-## 🤖 Telegram commands
+## 🛡 Security & Local-First Design
 
-| Command | Action |
-|---|---|
-| `/lots` | Show current offers |
-| `/orders` | Show recent orders |
-| `/stats` | Show statistics |
-| `/categories` | Find a FunPay category |
-| `/price ID 199` | Change one offer's price |
-| `/prices -15%` | Apply a bulk price change |
-| `/on ID` / `/off ID` | Enable or disable an offer |
-| `/clone ID` | Clone an offer |
-| `/export ID` | Export an offer as ZIP |
-| `/delete ID` | Delete after creating a backup |
-| `/rollback` | Roll back the last change |
-| `/stop` | Pause the bulk queue |
-| `/resume` | Resume a saved queue |
-| `/cancel` | Permanently cancel and delete a queue |
+- 🔒 **Loopback Only**: The dashboard is bound strictly to `127.0.0.1:8765` with zero external ingress.
+- 🔑 **Redacted Storage**: Telegram credentials and FunPay cookies are safely persisted and never rendered in browser markup.
+- 🗜 **Zip Slip Prevention**: All uploaded archives undergo rigorous path traversal and expansion size checks.
+- 💾 **Automatic Snapshots**: Snapshot records are created prior to destructive operations, allowing one-click rollback (`/rollback`).
 
-## 🛡 Security
+---
 
-- The dashboard only listens on `127.0.0.1` and uses a local access key.
-- Stored secrets are never rendered in HTML and are redacted from user-facing errors.
-- ZIP extraction rejects path traversal and enforces size limits.
-- Local backup records are created before destructive offer changes.
-- This repository excludes user configs, tokens, cookies, logs, backups, and product packages.
+## 🧑‍💻 Build from Source
 
-See [`SECURITY.md`](SECURITY.md) for responsible reporting.
-
-## 🧑‍💻 Build from source
-
-Go 1.23+ is required.
+Requires **Go 1.23+**:
 
 ```powershell
-go test ./...
+# 1. Clone repository
+git clone https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-.git
+cd ArtBay-Publisher-FunPay-bot-
 
-# Embed the app icon and version info (optional, done automatically in CI)
-go install github.com/tc-hib/go-winres@latest
-go-winres make
+# 2. Run unit tests and static checks
+go test -v ./...
+go vet ./...
 
+# 3. Build optimized Windows GUI binary
 go build -trimpath -ldflags="-s -w -H=windowsgui" -o ArtBayPublisher.exe .
-
-# Build the installer (optional, requires Inno Setup 6)
-iscc installer\ArtBayPublisher.iss
 ```
 
-## 🗺 Project status
+---
 
-- Current version: **4.0.4**
-- Primary platform: **Windows 10/11 x64**
-- Interface: **local web dashboard + Telegram**
-- Changes: [`CHANGELOG.md`](CHANGELOG.md)
+## 👨‍🚀 Developers & Community
 
-## 👨‍🚀 Developers
-
-<table>
+<table align="center">
   <tr>
-    <td align="center">
-      <a href="https://github.com/RovelLabs"><b>RovelLabs</b></a><br>
-      <sub>Development · architecture · maintenance</sub>
+    <td align="center" width="220">
+      <a href="https://github.com/RovelLabs">
+        <img src="https://github.com/RovelLabs.png" width="100px;" alt="RovelLabs"/><br />
+        <sub><b>RovelLabs</b></sub>
+      </a><br />
+      <sub>Architecture · Core Engine · UI</sub>
     </td>
   </tr>
 </table>
 
-## 📄 Legal
+- **GitHub Organization**: [@RovelLabs](https://github.com/RovelLabs)
+- **Repository**: [ArtBay-Publisher-FunPay-bot-](https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-)
+- **Issues & Suggestions**: [Open an Issue](https://github.com/RovelLabs/ArtBay-Publisher-FunPay-bot-/issues)
 
-Copyright © 2026 RovelLabs. All rights reserved. See [`LICENSE`](LICENSE) for source-use terms.
+---
+
+## 🏷️ Tags & Keywords
+
+`funpay` • `funpay-bot` • `telegram-bot` • `funpay-publisher` • `automation` • `golang` • `go` • `marketplace` • `bulk-uploader` • `ecommerce` • `windows` • `local-first` • `lot-manager` • `funpay-auto-response` • `auto-publishing`
+
+---
+
+## 📄 License
+
+Copyright © 2026 **RovelLabs**. All rights reserved.  
+Distributed under the terms of the [Source-Available License](LICENSE).
