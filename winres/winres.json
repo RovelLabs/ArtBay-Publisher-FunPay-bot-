@@ -1,48 +1,50 @@
 {
   "RT_GROUP_ICON": {
-    "APP": [
-      "../assets/icon-256.png"
-    ]
+    "APP": {
+      "0000": [
+        "../assets/icon-256.png"
+      ]
+    }
   },
   "RT_MANIFEST": {
     "#1": {
-      "identity": {
-        "name": "RovelLabs.ArtBayPublisher",
-        "version": "4.0.3.0"
-      },
-      "description": "ArtBay Publisher — Telegram to FunPay bulk publishing bridge",
-      "minimum-os": "win7",
-      "execution-level": "as invoker",
-      "ui-access": false,
-      "auto-elevate": false,
-      "dpi-awareness": "system",
-      "disable-theming": false,
-      "disable-window-filtering": false,
-      "high-resolution-scrolling-aware": true,
-      "ultra-high-resolution-scrolling-aware": true,
-      "long-path-aware": true,
-      "printer-driver-isolation": false,
-      "gdi-scaling": false,
-      "segment-heap": false,
-      "use-common-controls-v6": true
+      "0409": {
+        "description": "ArtBay Publisher — Telegram to FunPay bulk publishing bridge",
+        "minimum-os": "win7",
+        "execution-level": "as invoker",
+        "ui-access": false,
+        "auto-elevate": false,
+        "dpi-awareness": "system",
+        "disable-theming": false,
+        "disable-window-filtering": false,
+        "high-resolution-scrolling-aware": true,
+        "ultra-high-resolution-scrolling-aware": true,
+        "long-path-aware": true,
+        "printer-driver-isolation": false,
+        "gdi-scaling": false,
+        "segment-heap": false,
+        "use-common-controls-v6": true
+      }
     }
   },
   "RT_VERSION": {
     "#1": {
-      "fixed": {
-        "file_version": "4.0.3.0",
-        "product_version": "4.0.3.0"
-      },
-      "info": {
-        "0409": {
-          "CompanyName": "RovelLabs",
-          "FileDescription": "ArtBay Publisher — Telegram to FunPay bulk publishing bridge",
-          "FileVersion": "4.0.3.0",
-          "InternalName": "ArtBayPublisher.exe",
-          "LegalCopyright": "Copyright (c) 2026 RovelLabs",
-          "OriginalFilename": "ArtBayPublisher.exe",
-          "ProductName": "ArtBay Publisher",
-          "ProductVersion": "4.0.3.0"
+      "0000": {
+        "fixed": {
+          "file_version": "4.0.3.0",
+          "product_version": "4.0.3.0"
+        },
+        "info": {
+          "0409": {
+            "CompanyName": "RovelLabs",
+            "FileDescription": "ArtBay Publisher — Telegram to FunPay bulk publishing bridge",
+            "FileVersion": "4.0.3.0",
+            "InternalName": "ArtBayPublisher.exe",
+            "LegalCopyright": "Copyright (c) 2026 RovelLabs",
+            "OriginalFilename": "ArtBayPublisher.exe",
+            "ProductName": "ArtBay Publisher",
+            "ProductVersion": "4.0.3.0"
+          }
         }
       }
     }
